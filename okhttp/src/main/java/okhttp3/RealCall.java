@@ -65,8 +65,12 @@ final class RealCall implements Call {
     return originalRequest;
   }
 
+  /**
+   * 同步执行
+   */
   @Override public Response execute() throws IOException {
     synchronized (this) {
+      //如果这个call已经执行过一次，则抛出异常
       if (executed) throw new IllegalStateException("Already Executed");
       executed = true;
     }
@@ -90,6 +94,9 @@ final class RealCall implements Call {
     retryAndFollowUpInterceptor.setCallStackTrace(callStackTrace);
   }
 
+  /**
+   * 异步执行
+   */
   @Override public void enqueue(Callback responseCallback) {
     synchronized (this) {
       if (executed) throw new IllegalStateException("Already Executed");

@@ -223,6 +223,7 @@ public class OkHttpClient implements Cloneable, Call.Factory, WebSocket.Factory 
   }
 
   OkHttpClient(Builder builder) {
+    //重要的成员 分发器
     this.dispatcher = builder.dispatcher;
     this.proxy = builder.proxy;
     this.protocols = builder.protocols;
@@ -425,6 +426,10 @@ public class OkHttpClient implements Cloneable, Call.Factory, WebSocket.Factory 
     return new Builder(this);
   }
 
+  /**
+   * 内部类
+   * 用于构建client对象
+   */
   public static final class Builder {
     Dispatcher dispatcher;
     @Nullable Proxy proxy;
@@ -924,6 +929,7 @@ public class OkHttpClient implements Cloneable, Call.Factory, WebSocket.Factory 
       return this;
     }
 
+    //最后调用这个方法，返回一个client对象
     public OkHttpClient build() {
       return new OkHttpClient(this);
     }
